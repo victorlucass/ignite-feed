@@ -1,7 +1,17 @@
-import { useState } from "react";
+import { Header } from "./components/Header";
+import "./global.css";
+import styles from "./app.module.css";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Header />
+      <div className={styles.wrapper}>
+        <aside>sidebar</aside>
+        <main></main>
+      </div>
+    </>
+  );
 }
 
 export default App;
