@@ -9,6 +9,10 @@
   width: 100%;
   height: 4.5rem;
   object-fit: cover;
+  /* 
+  sobre objet-fit: https://www.alura.com.br/artigos/css-object-fit-trabalhando-proporcoes 
+  resumindo, o object-fit recorta a img para manter a qualidade.
+  */
 }
 
 .profile {

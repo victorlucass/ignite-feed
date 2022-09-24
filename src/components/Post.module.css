@@ -1,0 +1,66 @@
+.post + .post {
+  margin-top: 2rem;
+}
+
+.post {
+  background: var(--gray-800);
+  border-radius: 8px;
+  padding: 2.5rem;
+}
+
+.post > header {
+  /* relembrando, esse simbolo de maior quer dizer que irá pegar apenas o elemento 
+    pai, os filhos dentro dele não serão afetados */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.875rem;
+}
+
+.author {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.authorInfo strong {
+  color: var(--gray-100);
+  line-height: 1.6;
+}
+
+.authorInfo span {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--gray-400);
+}
+
+.authorAvatar {
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid transparent;
+  outline: 2px solid var(--green-500);
+  border-radius: 8px;
+}
+
+.content {
+  border-bottom: 1px solid var(--gray-600);
+}
+
+.content p:last-child {
+  margin-bottom: 1.5rem;
+}
+
+.content p + p {
+  margin-top: 1.5rem;
+}
+
+.content p a {
+  color: var(--green-300);
+  font-weight: 700;
+  font-family: "Roboto";
+}

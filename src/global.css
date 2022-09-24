@@ -8,6 +8,7 @@
   --gray-800: #202024;
   --gray-900: #121214;
 
+  --green-300: #00b37e;
   --green-500: #00875f;
 }
 
@@ -23,8 +24,38 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body, button, textarea, input {
+body,
+button,
+textarea,
+input {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* custom scroll */
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--gray-600);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--white);
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--green-500);
 }
