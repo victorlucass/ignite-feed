@@ -12,12 +12,6 @@ button:focus {
   gap: 1rem;
 }
 
-.comment > img {
-  height: 3rem;
-  width: 3rem;
-}
-
-.comment > img,
 .commentContent {
   border-radius: 8px;
 }

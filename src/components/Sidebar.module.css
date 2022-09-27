@@ -42,23 +42,6 @@
   margin-top: 1.5rem;
 }
 
-.avatar {
-  width: calc(3rem + 12px);
-  height: calc(3rem + 12px);
-  /* 
-    outra solução para img é usar: 
-      box-sizing: initial 
-      diferente do border-box, o initial adiciona espaço!
-  */
-  border-radius: 8px;
-  border: 4px solid var(--gray-600);
-  outline: 2px solid var(--green-500);
-  /* 
-    outline é contorno.
-    contornos não ocupam espaços, eles são desenhados acima do conteúdo.
-  */
-}
-
 .sidebar footer a {
   display: flex;
   flex-direction: row;
