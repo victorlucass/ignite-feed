@@ -1,46 +1,86 @@
 import { Comment } from "./Comment";
 import styles from "./Post.module.css";
 import { Avatar } from "./Avatar";
-export function Post() {
+import { format, formatDistanceToNow } from "date-fns";
+import ptBr from "date-fns/locale/pt-BR";
+import { useState } from "react";
+
+export function Post({ author, content, publishedAt }) {
+  // Hooks
+  const [comments, setComment] = useState(["Post bacana 🙀"]);
+  const [newCommentText, setNewCommentText] = useState("");
+  // fim Hooks
+
+  const publishedDateFormatted = format(
+    publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBr,
+    }
+  );
+
+  const publishedDateRelativeNow = formatDistanceToNow(publishedAt, {
+    locale: ptBr,
+    addSuffix: true,
+  });
+
+  function handleCreateNewComment() {
+    event.preventDefault();
+    setComment([...comments, newCommentText]);
+    setNewCommentText("");
+  }
+
+  function handleNewCommentChange() {
+    setNewCommentText(event.target.value);
+  }
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
           <Avatar src="https://github.com/victorlucass.png" />
           <div className={styles.authorInfo}>
-            <strong>Victor Lucas</strong>
-            <span> Dev. Front-End </span>
+            <strong>{author.name}</strong>
+            <span> {author.role} </span>
           </div>
         </div>
-        <time title="24 de Setembro de 2022" dateTime="2022-09-24 16:32:00">
-          Públicado há 1h
+        <time
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
+        >
+          {publishedDateRelativeNow}
         </time>
       </header>
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-        </p>
-        <p>
-          <a href="#">👉&nbsp;&nbsp;jane.design/doctorcare</a>
-        </p>
-        <p>
-          <a href="#">#novoprojeto #nlw #rocketseat</a>
-        </p>
+        {content.map((line) => {
+          if (line.type == "paragraph") {
+            return <p>{line.content}</p>;
+          } else if (line.type == "link") {
+            return (
+              <p>
+                <a href="#">{line.content}</a>
+              </p>
+            );
+          }
+        })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Nossa, adorei amigo! Parabéns" />
+        <textarea
+          name="comment"
+          onChange={handleNewCommentChange}
+          value={newCommentText}
+          placeholder="Nossa, adorei amigo! Parabéns"
+        />
         <footer>
           <button type="submit">Publicar</button>
         </footer>
       </form>
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => {
+          return <Comment content={comment} />;
+        })}
       </div>
     </article>
   );
