@@ -7,10 +7,11 @@ import { useState } from "react";
 
 export function Post({ author, content, publishedAt }) {
   // Hooks
-  const [comments, setComment] = useState(["Post bacana 🙀"]);
+  const [comments, setComments] = useState(["Post bacana 🙀"]);
   const [newCommentText, setNewCommentText] = useState("");
-  // fim Hooks
+  // ------------------------------------
 
+  // Consts
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
@@ -24,15 +25,35 @@ export function Post({ author, content, publishedAt }) {
     addSuffix: true,
   });
 
+  const isNewCommentEmpty = newCommentText.length === 0;
+  // ------------------------------------
+
+  // Functions
+
   function handleCreateNewComment() {
     event.preventDefault();
-    setComment([...comments, newCommentText]);
+    setComments([...comments, newCommentText]);
     setNewCommentText("");
   }
 
   function handleNewCommentChange() {
+    event.target.setCustomValidity("");
     setNewCommentText(event.target.value);
   }
+
+  function deleteComment(comment) {
+    const commentsWithoutDeletedOne = comments.filter((resource) => {
+      return comment !== resource;
+    });
+
+    setComments(commentsWithoutDeletedOne);
+  }
+
+  function handleNewCommentInvalid() {
+    event.target.setCustomValidity("Campo está vazio!");
+  }
+
+  // ------------------------------------
 
   return (
     <article className={styles.post}>
@@ -54,10 +75,10 @@ export function Post({ author, content, publishedAt }) {
       <div className={styles.content}>
         {content.map((line) => {
           if (line.type == "paragraph") {
-            return <p>{line.content}</p>;
+            return <p key={line.content}>{line.content}</p>;
           } else if (line.type == "link") {
             return (
-              <p>
+              <p key={line.content}>
                 <a href="#">{line.content}</a>
               </p>
             );
@@ -72,14 +93,24 @@ export function Post({ author, content, publishedAt }) {
           onChange={handleNewCommentChange}
           value={newCommentText}
           placeholder="Nossa, adorei amigo! Parabéns"
+          required
+          onInvalid={handleNewCommentInvalid}
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button disabled={isNewCommentEmpty} type="submit">
+            Publicar
+          </button>
         </footer>
       </form>
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comment content={comment} />;
+          return (
+            <Comment
+              key={comment}
+              content={comment}
+              onDeleteComment={deleteComment}
+            />
+          );
         })}
       </div>
     </article>
